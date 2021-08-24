@@ -5,7 +5,7 @@
 #include <conio.h>
 #include "database.h"
 
-
+void time_c();
 int dir_file();
 int User_Enum();
 //int route_ptint();
@@ -90,7 +90,7 @@ int User_Enmu()
                 printf("\n%s\n",end);fprintf(file,"%s\n",end);
             }
             printf("+ Privilege +\n%s\n",line);
-            fprintf(file,"\n%s\n%s\n","+ List Of the Users",line);
+            fprintf(file,"\n%s\n%s\n","+ Privilege +",line);
             if((ptr1 = popen(Command6 ,"r"))!=NULL){
                   while(fgets(buf1,BUFSIZ,ptr1)!=NULL){
                      printf("%s",buf1);
@@ -99,78 +99,75 @@ int User_Enmu()
                   printf("\n%s\n",end);fprintf(file,"%s\n",end);
             }
             printf("+ List Of the Users +\n%s\n",line);
-            fprintf(file,"\n%s\n%s\n","+ List Of the Users",line);
+            fprintf(file,"\n%s\n%s\n","+ List Of the Users +",line);
             if((ptr2 = popen(Command7 ,"r"))!=NULL){
                    while(fgets(buf2,BUFSIZ,ptr2)!=NULL){
                            printf("%s",buf2);
                            fprintf(file,"%s",buf2);
                   }
                   printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
             printf("+ Users Directory +\n%s\n",line);
-            fprintf(file,"\n%s\n%s\n","+ Users Directory",line);;
+            fprintf(file,"\n%s\n%s\n","+ Users Directory +",line);;
             if((ptr3 = popen(Command8 ,"r"))!=NULL){
                    while(fgets(buf3,BUFSIZ,ptr3)!=NULL){
                           printf("%s",buf3);
                           fprintf(file,"%s",buf3);
                     }
-                    printf("\n%s\n",end);fprintf(file,"%s\n",end);
+                     printf("\n%s\n",end);fprintf(file,"%s\n",end);
             }
-
+            printf("+ logon requirements +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ logon requirements +",line);;
+            if((ptr4 = popen(Command9 ,"r"))!=NULL){
+                     while(fgets(buf4,BUFSIZ,ptr4)!=NULL){
+                            printf("%s",buf4);
+                            fprintf(file,"%s",buf4);
+                      }
+                      printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+            printf("+ Administrator accont +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ Administrator accont +",line);;
+            if((ptr5 = popen(Command10 ,"r"))!=NULL){
+                       while(fgets(buf5,BUFSIZ,ptr5)!=NULL){
+                              printf("%s",buf5);
+                              fprintf(file,"%s",buf5);
+                       }
+                       printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+            printf("+ User accont +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ User accont +",line);
+            if((ptr7 = popen(Command11 ,"r"))!=NULL){
+                  while(fgets(buf7,BUFSIZ,ptr7)!=NULL){
+                        printf("%s",buf7);
+                        fprintf(file,"%s",buf7);
+                  }
+                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+            printf("+ localgroup administrators +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ localgroup administrators +",line);
+            if((ptr8 = popen(Command12 ,"r"))!=NULL){
+                  while(fgets(buf8,BUFSIZ,ptr8)!=NULL){
+                        printf("%s",buf8);
+                        fprintf(file,"%s",buf8);
+                  }
+                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
             pclose(ptr);
-        }
+
            fclose(file);
 }
-/*
-//whoami /priv
 int route_ptint()
 {
-           char * log  = "=================================================\n"
+           char * log  = "\n=================================================\n"
                          "router table \n"
                          "===================\n\n";
-           char *Command = "route print";
-           char buf[BUFSIZ];
-           FILE *ptr, *file;
-
-           file = fopen("./somefile.txt", "a");
-           fprintf(file,"%s\n",log );
-           if (!file) abort();
-           printf("%s",log);
-           if ((ptr = popen(Command, "r")) != NULL) {
-                   while (fgets(buf, BUFSIZ, ptr) != NULL){
-                           printf("%s",buf);
-                           fprintf(file, "%s", buf);
-                  }
-                   pclose(ptr);
-           }
-           fclose(file);
-}
-int system_info(){
-    char *Command = "systeminfo";
-    char buf[BUFSIZ];
-    FILE *ptr, *file;
-
-           file = fopen("./somefile.txt", "a");
-           if (!file) abort();
-           if ((ptr = popen(Command, "r")) != NULL) {
-                   while (fgets(buf, BUFSIZ, ptr) != NULL){
-                           printf("%s",buf);
-                           fprintf(file, "%s", buf);
-                  }
-                   pclose(ptr);
-           }
-           fclose(file);
-}
-*/
-
+}           
 int main(){
-    time_t tm;
-    time(&tm);
-    printf("\n--------------------------------\n\nCurrent Date&Time %s",\
-     ctime(&tm),"\n--------------------------\n");
+    time_c();
     dir_file();
     User_Enmu();
-  //  route_ptint();
-    ////system_info();
+    route_ptint();
+
 
 return 0 ;
 
