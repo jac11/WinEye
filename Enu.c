@@ -8,7 +8,7 @@
 void time_c();
 int dir_file();
 int User_Enum();
-//int route_ptint();
+int route_network();
 //int system_info();
 int dir_file()
    {
@@ -150,23 +150,111 @@ int User_Enmu()
                         printf("%s",buf8);
                         fprintf(file,"%s",buf8);
                   }
-                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
             }
             pclose(ptr);
-
-           fclose(file);
+            fclose(file);
 }
-int route_ptint()
+int route_network()
 {
-           char * log  = "\n=================================================\n"
-                         "router table \n"
-                         "===================\n\n";
-}           
+      char * log  = "=================================================\n"
+                    "             + Network Enumeration +             \n"
+                    "=================================================\n"
+                    " + IP Configuration +        \n"
+                    "=============================\n";
+      file = fopen("./Enum_Win.txt", "a");
+      printf("%s",log);
+      fprintf(file,"%s",log);
+      if((ptr1 = popen(Command13 ,"r"))!=NULL){
+             while(fgets(buf1,BUFSIZ,ptr1)!=NULL){
+                   printf("%s",buf1);
+                   fprintf(file,"%s",buf1);
+            }
+            printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ router tabel +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ router tabel +",line);
+       if((ptr2 = popen(Command14 ,"r"))!=NULL){
+                while(fgets(buf2,BUFSIZ,ptr2)!=NULL){
+                     printf("%s",buf2);
+                    fprintf(file,"%s",buf2);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ ARP table +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ ARP tablel +",line);
+       if((ptr3 = popen(Command15 ,"r"))!=NULL){
+                while(fgets(buf3,BUFSIZ,ptr3)!=NULL){
+                     printf("%s",buf3);
+                    fprintf(file,"%s",buf3);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ current connections +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ current connections +",line);
+       if((ptr4 = popen(Command16 ,"r"))!=NULL){
+                while(fgets(buf4,BUFSIZ,ptr4)!=NULL){
+                     printf("%s",buf4);
+                    fprintf(file,"%s",buf4);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ firewall state and current configuration +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ firewall state and current configuration +",line);
+       if((ptr5 = popen(Command17 ,"r"))!=NULL){
+                while(fgets(buf5,BUFSIZ,ptr5)!=NULL){
+                     printf("%s",buf5);
+                    fprintf(file,"%s",buf5);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      /*
+      printf("+ firewall’s blocked ports +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ firewall’s blocked ports +",line);
+       if((ptr6 = popen(Command18 ,"r"))!=NULL){
+                while(fgets(buf6,BUFSIZ,ptr6)!=NULL){
+                     printf("%s",buf6);
+                    fprintf(file,"%s",buf6);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      */
+      printf("+ Disable firewall +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ Disable firewall +",line);
+       if((ptr7 = popen(Command19 ,"r"))!=NULL){
+                while(fgets(buf7,BUFSIZ,ptr7)!=NULL){
+                     printf("%s",buf7);
+                    fprintf(file,"%s",buf7);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ List all network shares +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ List all network shares +",line);
+       if((ptr8 = popen(Command20 ,"r"))!=NULL){
+                while(fgets(buf8,BUFSIZ,ptr8)!=NULL){
+                     printf("%s",buf8);
+                    fprintf(file,"%s",buf8);
+                }
+          printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+      printf("+ SNMP Configuration +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ SNMP Configuration +",line);
+       if((ptr9 = popen(Command21 ,"r"))!=NULL){
+            while(fgets(buf9,BUFSIZ,ptr9)!=NULL){
+                  printf("%s",buf9);
+                  fprintf(file,"%s",buf9);
+            }
+             printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
+
+      pclose(ptr);
+      fclose(file);
+}
+
 int main(){
     time_c();
     dir_file();
     User_Enmu();
-    route_ptint();
+    route_network();
 
 
 return 0 ;
