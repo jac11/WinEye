@@ -3,33 +3,21 @@
 #include <windows.h>
 #include <time.h>
 #include <conio.h>
-#define PATH "%SYSTEMROOT%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+#include "database.h"
 
-FILE *file ;
-void style();
+
 int dir_file();
-int if_config();
-int route_ptint();
-int system_info();
+int User_Enum();
+//int route_ptint();
+//int system_info();
 int dir_file()
    {
-           char *Command   = PATH " systeminfo | findstr /B /C:OS";
-           char *Command1  = PATH " wmic os get osarchitecture";
-           char *Command2  = PATH " Get-ChildItem Env: || ft Key,Value";
-           char *Command3  = PATH " wmic logicaldisk get caption,description,providername,Size";
-           char *Command4  = PATH " wmic qfe";
-           char buf[BUFSIZ];
-           char buf1[BUFSIZ];
-           char buf2[BUFSIZ];
-           char buf3[BUFSIZ];
-           char buf4[BUFSIZ];
-           FILE *ptr,*ptr1 ,*ptr2, *ptr3,*ptr4;
            char * log  = "=================================================\n"
                          "              + Windows Enumeration +            \n"
                          "=================================================\n"
                          " + Windows Version and Configuration + \n"
                          "=====================================\n\n";
-          file = fopen("./somefile.txt", "w+");
+          file = fopen("./Enum_Win.txt", "w+");
           if (!file) abort();
 
           if ((ptr = popen(Command, "r")) != NULL)
@@ -39,38 +27,38 @@ int dir_file()
                    while ((fgets(buf,BUFSIZ,ptr) != NULL)){
                          fprintf(file,"%s", buf);
                          printf("%s",buf);
-                         style();
+                         printf("%s\n",end1);fprintf(file,"%s\n",end1);
                    }
-          printf("%s","+ ARCHITECTURE +\n=========================\n");
+          printf("+ ARCHITECTURE +\n%s\n",line);
           if ((ptr1 = popen(Command1, "r")) != NULL){
-                  fprintf(file,"%s","+ ARCHITECTURE +\n==========================\n");
+                  fprintf(file,"\n%s\n%s\n","+ ARCHITECTURE +",line);
                    while ((fgets(buf1,BUFSIZ,ptr1) != NULL)){
                          fprintf(file,"%s",buf1);
                          printf("%s",buf1);
                    }
-                   style();
+                   printf("\n%s\n",end);fprintf(file,"%s\n",end);
           }
 
-          printf("%s","\n + List all env variables + \n===================================\n");
-          fprintf(file,"%s","\n + List all env variables + \n===================================\n");
+          printf("+ List all env variables +\n%s\n ",line);
+          fprintf(file,"\n%s\n%s\n","+ List all env variables +",line);
           if ((ptr2 = popen(Command2, "r")) != NULL){
                    while ((fgets(buf2, BUFSIZ,ptr2) != NULL)){
                          fprintf(file, "%s",buf2);
                          printf("%s",buf2);
                   }
-                  style();
+                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
           }
-          printf("%s","\n + List all drives + \n===================================\n");
-          fprintf(file,"%s","\n + List all drives + \n===================================\n");
+          printf("+ List all drives +\n%s\n",line);
+          fprintf(file,"\n%s\n%s\n","+ List all drives +",line);
           if ((ptr3 = popen(Command3, "r")) != NULL){
                while ((fgets(buf3,BUFSIZ,ptr3) != NULL)){
                   fprintf(file, "%s",buf3);
                   printf("%s",buf3);
                }
-               style();
+               printf("\n%s\n",end);fprintf(file,"%s\n",end);
           }
-          printf("%s","\n + Extract patchs and updates + \n===================================\n");
-          fprintf(file,"%s","\n + Extract patchs and updates + \n===================================\n");
+          printf("+ Extract patchs and updates  +\n%s\n",line);
+          fprintf(file,"\n%s\n%s\n","+ Extract patchs and updates +",line);
           if ((ptr4 = popen(Command4, "r")) != NULL){
                while ((fgets(buf4,BUFSIZ,ptr4) != NULL)){
                   fprintf(file, "%s",buf4);
@@ -81,30 +69,59 @@ int dir_file()
           }
           fclose(file);
    }
-int if_config()
+
+int User_Enmu()
 {
-           char *Command = "ipconfig /all";
-           char buf[BUFSIZ];
-           FILE *ptr, *file;
+          // char buf2[BUFSIZ];
            char * log  = "=================================================\n"
-                         "    Network  Enumeration  \n"
-                         "==============================\n"
-                         "Interface\n"
-                         "===================\n\n";
-           file = fopen("./somefile.txt", "a");
+                         "             + User  Enumeration +               \n"
+                         "=================================================\n"
+                         " + Get current username + \n"
+                         "=============================\n";
+           file = fopen("./Enum_Win.txt", "a");
            fprintf(file, "%s", log);
            if (!file) abort();
            printf("%s",log);
-           if ((ptr = popen(Command, "r")) != NULL) {
-                   while (fgets(buf, BUFSIZ, ptr) != NULL){
+           if ((ptr = popen(Command5, "r")) != NULL) {
+                   while (fgets(buf,BUFSIZ, ptr) != NULL){
                            printf("%s",buf);
-                           fprintf(file, "%s", buf);
+                           fprintf(file,"%s",buf);
                   }
-                   pclose(ptr);
-           }
+                printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+            printf("+ Privilege +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ List Of the Users",line);
+            if((ptr1 = popen(Command6 ,"r"))!=NULL){
+                  while(fgets(buf1,BUFSIZ,ptr1)!=NULL){
+                     printf("%s",buf1);
+                     fprintf(file,"%s",buf1);
+                  }
+                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+            printf("+ List Of the Users +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ List Of the Users",line);
+            if((ptr2 = popen(Command7 ,"r"))!=NULL){
+                   while(fgets(buf2,BUFSIZ,ptr2)!=NULL){
+                           printf("%s",buf2);
+                           fprintf(file,"%s",buf2);
+                  }
+                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            printf("+ Users Directory +\n%s\n",line);
+            fprintf(file,"\n%s\n%s\n","+ Users Directory",line);;
+            if((ptr3 = popen(Command8 ,"r"))!=NULL){
+                   while(fgets(buf3,BUFSIZ,ptr3)!=NULL){
+                          printf("%s",buf3);
+                          fprintf(file,"%s",buf3);
+                    }
+                    printf("\n%s\n",end);fprintf(file,"%s\n",end);
+            }
+
+            pclose(ptr);
+        }
            fclose(file);
 }
-
+/*
+//whoami /priv
 int route_ptint()
 {
            char * log  = "=================================================\n"
@@ -117,7 +134,7 @@ int route_ptint()
            file = fopen("./somefile.txt", "a");
            fprintf(file,"%s\n",log );
            if (!file) abort();
-           printf("%s,log");
+           printf("%s",log);
            if ((ptr = popen(Command, "r")) != NULL) {
                    while (fgets(buf, BUFSIZ, ptr) != NULL){
                            printf("%s",buf);
@@ -143,19 +160,18 @@ int system_info(){
            }
            fclose(file);
 }
-void style(){
-  fprintf(file,"%s","_____________________________________________________\n");
-  printf("%s","___________________________________________________________\n");
-}
+*/
+
 int main(){
     time_t tm;
     time(&tm);
     printf("\n--------------------------------\n\nCurrent Date&Time %s",\
      ctime(&tm),"\n--------------------------\n");
     dir_file();
-    if_config();
-    route_ptint();
-    system_info();
+    User_Enmu();
+  //  route_ptint();
+    ////system_info();
 
 return 0 ;
+
 }
