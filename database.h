@@ -38,18 +38,24 @@ char *Command14  = PATH  " Get-NetRoute -AddressFamily IPv4 || ft DestinationPre
 char *Command15  = PATH  " Get-NetNeighbor -AddressFamily IPv4 || ft ifIndex,IPAddress,LinkLayerAddress,State";
 char *Command16  = PATH  " netstat -ano";
 char *Command17  = PATH  " netsh firewall show config";
-char *Command18  = PATH  " $f=New-object -comObject HNetCfg.FwPolicy2;$f.rules ||  where {$_.action -eq '0'} || select name,applicationname,localports";
+//char *Command18  = PATH  " $f=New-object -comObject HNetCfg.FwPolicy2;$f.rules ||  where {$_.action -eq '0'} || select name,applicationname,localports";
 char *Command19  = PATH  " netsh advfirewall set allprofiles state off";
 char *Command20  = PATH  " net share";
 char *Command21  = PATH  " reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\SNMP /s";
-
-
-char *end  =  "________________________END________________________";
-char *end1 = "_____________________________________________________";
-char *line = "===================================";
-void time_c(){
-      time_t tm;
-      time(&tm);
-       printf("\n--------------------------------\n\nCurrent Date&Time %s",\
-       ctime(&tm),"\n--------------------------\n");
+char *Command22  = PATH  " type %WINDIR%\\System32\\drivers\\etc\\hosts";
+// lines to give style txt file
+char  *end   = "________________________END________________________";
+char  *end1  = "___________________________________________________";
+char  *line0 = "=================================================";
+char  *line  = "==================================";
+//func run get time and date
+int time_c(){
+      time_t timeNow;
+      timeNow = time(NULL);
+       char *TIMENOW= (ctime(&timeNow));
+       file = fopen("./Enum_Win.txt", "w+");
+       fprintf(file,"%s\n", line0);
+       fprintf(file,"%s","Currant Time&Date : ");
+       fprintf(file,"%s", TIMENOW);
+       printf("%s\nCurrent Time&Date : %s",line0, TIMENOW);
 }

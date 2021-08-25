@@ -4,22 +4,23 @@
 #include <time.h>
 #include <conio.h>
 #include "database.h"
+#include <string.h>
 
-void time_c();
+int time_c();
 int dir_file();
 int User_Enum();
 int route_network();
 //int system_info();
 int dir_file()
    {
+
            char * log  = "=================================================\n"
                          "              + Windows Enumeration +            \n"
                          "=================================================\n"
                          " + Windows Version and Configuration + \n"
                          "=====================================\n\n";
-          file = fopen("./Enum_Win.txt", "w+");
-          if (!file) abort();
 
+          if (!file) abort();
           if ((ptr = popen(Command, "r")) != NULL)
           {
                    fprintf(file,"%s",log);
@@ -79,7 +80,7 @@ int User_Enmu()
                          " + Get current username + \n"
                          "=============================\n";
            file = fopen("./Enum_Win.txt", "a");
-           fprintf(file, "%s", log);
+           fprintf(file,"%s",log);
            if (!file) abort();
            printf("%s",log);
            if ((ptr = popen(Command5, "r")) != NULL) {
@@ -245,7 +246,15 @@ int route_network()
             }
              printf("\n%s\n",end);fprintf(file,"%s\n",end);
       }
-
+      printf("+ Host file Configuration +\n%s\n",line);
+      fprintf(file,"\n%s\n%s\n","+ Host file Configuration +",line);
+       if((ptr10 = popen(Command22 ,"r"))!=NULL){
+            while(fgets(buf10,BUFSIZ,ptr10)!=NULL){
+                  printf("%s",buf10);
+                  fprintf(file,"%s",buf10);
+            }
+             printf("\n%s\n",end);fprintf(file,"%s\n",end);
+      }
       pclose(ptr);
       fclose(file);
 }
@@ -255,8 +264,5 @@ int main(){
     dir_file();
     User_Enmu();
     route_network();
-
-
-return 0 ;
-
+    return 0 ;
 }
