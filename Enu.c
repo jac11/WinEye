@@ -1,19 +1,11 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
 #include <conio.h>
-//#include "database.h"
+#include "database.h"
 #include <string.h>
-#define PATH "%SYSTEMROOT%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
-char  *end   = "________________________END________________________";
-char  *end1  = "___________________________________________________";
-char  *line0 = "=================================================";
-char  *line  = "==================================";
-char buf[BUFSIZ];
-FILE *file ;
-FILE *ptr;
+
 
 int time_c();
 char dir_file();
@@ -47,14 +39,25 @@ char dir_file()
              }
 
               printf("\n%s\n",end);fprintf(file,"%s\n",end);
-              printf("\n+ Configuration +\n%s\n",line);
+              if (i==0){
+                  fprintf(file,"%s",L0);printf(L0);
+                }
+              if (i==1){
+                   fprintf(file,"%s",L1);printf(L1);
+                 }
+              if (i==2){
+                   fprintf(file,"%s",L2);printf(L2);
+                 }
+              if (i==3){
+                   fprintf(file,"%s",L3);printf(L3);
+                 }
               if (i==4)
                  break;
          }
   }
 char User_Enmu()
   {
-      char * log  = "=================================================\n"
+      char * log  = "\n=================================================\n"
                     "               + User  Enumeration +             \n"
                     "=================================================\n"
                     " + Get current username + \n"
@@ -80,17 +83,37 @@ char User_Enmu()
                     }
                }
                 printf("\n%s\n",end);fprintf(file,"%s\n",end);
-                printf("\n+ Configuration +\n%s\n",line);
+                if (i==0){
+                    fprintf(file,"%s",L4);printf(L4);
+                  }
+                if (i==1){
+                    fprintf(file,"%s",L5);printf(L5);
+                  }
+                if (i==2){
+                    fprintf(file,"%s",L6);printf(L6);
+                  }
+                if (i==3){
+                    fprintf(file,"%s",L7);printf(L7);
+                  }
+                if (i==4){
+                    fprintf(file,"%s",L8);printf(L8);
+                  }
+                if (i==5){
+                   fprintf(file,"%s",L9);printf(L9);
+                 }
+                if (i==6){
+                    fprintf(file,"%s",L10);printf(L10);
+                  }
                 if (i==7)
                    break;
            }
     }
 char route_network()
 {
-      char * log  = "=================================================\n"
-                      "               + User  Enumeration +             \n"
-                      "=================================================\n"
-                      " + Get current username + \n"
+      char * log  = "\n=================================================\n"
+                    "               + Network Enumeration +             \n"
+                    "===================================================\n"
+                      " + IP Configuration + \n"
                       "=============================\n";
       char info [9][200] = {
                         PATH  " ipconfig /all",
@@ -99,8 +122,8 @@ char route_network()
                         PATH  " netstat -ano",
                         PATH  " netsh firewall show config",
                         PATH  " netsh advfirewall set allprofiles state off",
-                        PATH  " net share"
-                        PATH  " reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\SNMP /sf",
+                        PATH  " net share",
+                        PATH  " reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\SNMP /s",
                         PATH  " type %WINDIR%\\System32\\drivers\\etc\\hosts"
                         };
               fprintf(file,"%s",log);
@@ -114,12 +137,36 @@ char route_network()
                       }
                  }
                   printf("\n%s\n",end);fprintf(file,"%s\n",end);
-                  printf("\n+ Configuration +\n%s\n",line);
+                  if (i==0){
+                      fprintf(file,"%s",L11);printf(L11);
+                    }
+                  if (i==1){
+                      fprintf(file,"%s",L12);printf(L12);
+                    }
+                  if (i==2){
+                      fprintf(file,"%s",L13);printf(L13);
+                    }
+                  if (i==3){
+                       fprintf(file,"%s",L14);printf(L14);
+                    }
+                  if (i==4){
+                      fprintf(file,"%s",L15);printf(L15);
+                    }
+                  if (i==5){
+                      fprintf(file,"%s",L16);printf(L16);
+                    }
+                  if (i==6){
+                      fprintf(file,"%s",L17);printf(L17);
+                    }
+                  if (i==7){
+                      fprintf(file,"%s",L18);printf(L18);
+                    }
                   if (i==8)
                      break;
-            }
-            pclose(ptr);
-            fclose(file);
+
+              }
+              pclose(ptr);
+              fclose(file);
             return 0;
 }
 int time_c(){
