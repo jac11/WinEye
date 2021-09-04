@@ -28,7 +28,19 @@
 #define L17 "\n============================\n + List all network shares + \n============================\n"
 #define L18 "\n============================\n + Host file Configuration + \n============================\n"
 
+//password  Enumeration
 
+#define L19 "\n===============================\n +find password in file + \n================================\n"
+#define L20 "\n===============================\n + find Password sysprep.nif + \n===============================\n"
+#define L21 "\n===============================\n + Wi-fi password + \n===============================\n"
+/*
+#define L21 "\n============================\n + Current connections + \n=============================\n"
+#define L22 "\n===============================\n + firewall state & configuration + \n================================\n"
+#define L23 "\n=============================\n + Disable firewall + \n=============================\n"
+#define L24 "\n=================================\n + SNMP Configurations + \n=================================\n"
+#define L25 "\n============================\n + List all network shares + \n============================\n"
+#define L26 "\n============================\n + Host file Configuration + \n============================\n"
+*/
 char buf[BUFSIZ];
 FILE *file ;
 FILE *ptr;
