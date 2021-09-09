@@ -6,6 +6,7 @@
 #define L1 "\n============================\n + List all env variables + \n============================\n"
 #define L2 "\n=============================\n + List all drives + \n=============================\n"
 #define L3 "\n===============================\n + Extract patchs and updates + \n==============================\n"
+#define L30 "\n===============================\n + systeminfo + \n==============================\n"
 
 //user Eunmrtion
 
@@ -33,18 +34,21 @@
 #define L19 "\n===============================\n +find password in file + \n================================\n"
 #define L20 "\n===============================\n + find Password sysprep.nif + \n===============================\n"
 #define L21 "\n===============================\n + Wi-fi password + \n===============================\n"
-/*
-#define L21 "\n============================\n + Current connections + \n=============================\n"
-#define L22 "\n===============================\n + firewall state & configuration + \n================================\n"
-#define L23 "\n=============================\n + Disable firewall + \n=============================\n"
-#define L24 "\n=================================\n + SNMP Configurations + \n=================================\n"
-#define L25 "\n============================\n + List all network shares + \n============================\n"
-#define L26 "\n============================\n + Host file Configuration + \n============================\n"
-*/
+//procce and fole 
+#define L22 "\n============================\n + haredware drives + \n=============================\n"
+#define L23 "\n===============================\n + test CVE-2019-1322 UsoSvc  + \n================================\n"
+#define L24 "\n=============================\n + programfile(64\\86) + \n=============================\n"
+#define L25 "\n=================================\n + service list brief + \n=================================\n"
+#define L26 "\n============================\n + Task list + \n============================\n"
+#define L27 "\n============================\n + start up programs + \n============================\n"
+#define L28 "\n============================\n + scheduled tasks + \n============================\n"
+
+#define PATH "%SYSTEMROOT%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
 char buf[BUFSIZ];
 FILE *file ;
 FILE *ptr;
-#define PATH "%SYSTEMROOT%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
 
 
 char  *end   = "________________________END________________________";

